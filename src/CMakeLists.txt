@@ -15,6 +15,7 @@ set(SOURCE_FILES
         Graph.cpp
         Node.cpp
         stringSlicing.cpp
+        Edge.h
 )
 
 # Don't change this

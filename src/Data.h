@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Graph.h"
-#include "Node.h"
 #include "stringSlicing.h"
 
 class Data{
@@ -12,6 +11,8 @@ public:
     // return the unordered-map for testing
     // test if the nodes are created well
     Graph testFunctionData();
+
+    ~Data();
 private:
     Graph mGraph;
 };

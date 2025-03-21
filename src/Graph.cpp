@@ -4,6 +4,7 @@
 
 #include "Graph.h"
 #include <iostream>
+#include <cstdlib>
 
 Node* Graph::getNode(const std::string& pName)
 {
@@ -11,7 +12,7 @@ Node* Graph::getNode(const std::string& pName)
     {
         return mNodeMap[pName];
     } else {
-        Node* node = new Node(pName);
+        class Node* node = new Node(pName);
         mNodeMap.emplace(pName,node);
         return node;
     }
@@ -20,17 +21,20 @@ Node* Graph::getNode(const std::string& pName)
 void Graph::createEdge(Node *pFrom, Node *pTo, double pCost)
 {
     // check if the root node is null
-    if (pFrom == NULL) {std::cerr << "Root city node is empty";}
+    if (pFrom == NULL) {
+        std::cout << "Root city node is empty";
+        exit(1);
+    }
     // check if the adjacent node is null
-    if (pTo == NULL) {std::cerr << "City to be added to the adjacency list is empty";}
+    if (pTo == NULL) {
+        std::cout << "City to be added to the adjacency list is empty";
+        exit(1);
+    }
 
     // create an edge from root to adjacent city and push-back it into root node's adjacent list
     Edge* fromRootEdge = new Edge(pTo,pCost);
-    pFrom->mAdjacencyList.push_back(fromRootEdge);
 
-    // create an edge from adjacent city to root city and push-back it into adjacent-city node's adjacent list
-    /*Edge* toRootEdge = new Edge(pFrom, pCost);
-    pTo->mAdjacencyList.push_back(toRootEdge);*/
+    pFrom->addAdjacencyList(fromRootEdge);
 }
 
 std::unordered_map<std::string, Node*> Graph::testFunctionGraph()

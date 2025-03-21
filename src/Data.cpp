@@ -48,3 +48,10 @@ void Data::createGraph(const std::string& pStart, const std::string& pEnd)
     Node* endNode = mGraph.getNode(pEnd);
 
 }
+Data::~Data()
+{
+    for (auto& i : mGraph.testFunctionGraph())
+    {
+        delete i.second;
+    }
+}
