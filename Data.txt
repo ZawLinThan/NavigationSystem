@@ -1,0 +1,14 @@
+City:Yangon
+Mandalay|5
+Naypyitaw|1
+City:Naypyitaw
+Yangon|1
+Mandalay|2
+Lashio|3
+City:Mandalay
+Yangon|5
+Naypyitaw|2
+Lashio|4
+City:Lashio
+Mandalay|4
+Naypyitaw|3
