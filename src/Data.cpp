@@ -26,11 +26,14 @@ Data::Data(const std::string& pFile)
                 rootNode = mGraph.getNode(rootCity);
 
             } else {
-                std::vector<std::string> sliceStrVec = stringSlice(str, '|');
-                adjacentNode = mGraph.getNode(sliceStrVec[0]);
-                cost = stof(sliceStrVec[1]);
+                if (!str.empty())
+                {
+                    std::vector<std::string> sliceStrVec = stringSlice(str, '|');
+                    adjacentNode = mGraph.getNode(sliceStrVec[0]);
+                    cost = stof(sliceStrVec[1]);
 
-                mGraph.createEdge(rootNode, adjacentNode, cost);
+                    mGraph.createEdge(rootNode, adjacentNode, cost);
+                }
             }
         }
     } else {
@@ -40,19 +43,21 @@ Data::Data(const std::string& pFile)
 
 bool Data::closedSetCheck(Edge* edge)
 {
+    // if found in the closed set, return true
     if (closedSet.find(edge->mTo) != closedSet.end())
     {
         return true;
     } else {
+        // if not found in the closed set, return false
         return false;
     }
 }
 
 void Data::findPath(const std::string& pStart, const std::string& pEnd)
 {
-    // Reverse the start and end b/c dikjstra gives the reverse path
-    Node* startNode = mGraph.getNode(pStart);
-    Node* endNode = mGraph.getNode(pEnd);
+    // Reverse the start and end b/c dijkstra gives the reverse path
+    Node* startNode = mGraph.getNode(pEnd);
+    Node* endNode = mGraph.getNode(pStart);
 
     // put the start node to the closed set
     closedSet.insert(startNode);
@@ -75,11 +80,17 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
                     // set previous node to be the current node
                     i->mTo->setPrev(currentNode);
                     // set the cost
-                    i->mTo->setCost(currentNode->getCost());
+                    i->mTo->setCost(currentNode->getCost() + i->mCost);
                     // add the node to the open set
                     openSet.push(i->mTo);
                 } else {
                 // if previous node has data / the node is visited
+                    // check if the new path is  superior to the old one
+                    if (currentNode->getCost() + i->mCost < i->mTo->getCost())
+                    {
+                        i->mTo->setPrev(currentNode);
+                        i->mTo->setCost(currentNode->getCost() + i->mCost);
+                    }
                 }
             }
         }
@@ -87,12 +98,27 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
         // if open set is empty, no path is found
         if (openSet.empty())
         {
-            break;
+            std::cout << "No path is found";
+            exit(0);
         }
 
         currentNode = openSet.top();
+        openSet.pop();
 
     } while (currentNode != endNode);
+
+    // output the cost of path
+    std::cout << "Path found, costs : " << endNode->getCost() << std::endl;
+    Node* temp = endNode;
+    // retrieving the path from previous node
+    while (temp->getPrev() != nullptr)
+    {
+        std::cout << temp->getName() << " -> ";
+        // switch to the previous node
+        temp = temp->getPrev();
+    }
+    // output the last city
+    std::cout << temp->getName();
 }
 
 Graph Data::testFunctionData()

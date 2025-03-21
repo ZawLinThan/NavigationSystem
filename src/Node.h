@@ -18,7 +18,7 @@ private:
     bool mVisited;
 
     // total cost, up to this node
-    double mCost;
+    unsigned mCost;
 
     // previous node (to store path information)
     Node* mPrev;

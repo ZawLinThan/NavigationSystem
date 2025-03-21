@@ -1,14 +1,562 @@
-City:Yangon
-Mandalay|5
-Naypyitaw|1
-City:Naypyitaw
-Yangon|1
-Mandalay|2
-Lashio|3
-City:Mandalay
-Yangon|5
-Naypyitaw|2
-Lashio|4
-City:Lashio
-Mandalay|4
-Naypyitaw|3
+City:New York
+Dubai|8703
+London|8463
+Washington DC|12218
+Perth|2243
+Prague|11148
+Zurich|10265
+Helsinki|4286
+Paris|12594
+Stockholm|12195
+San Francisco|12885
+Mexico City|4030
+Madrid|10605
+
+City:London
+Toronto|4660
+Moscow|7371
+Zurich|12708
+Copenhagen|12742
+Auckland|8662
+Atlanta|5167
+Oslo|14807
+Rome|1206
+Cape Town|8879
+Beijing|9047
+Singapore|5439
+Dubai|10031
+Vienna|10370
+
+City:Los Angeles
+Oslo|9514
+Istanbul|4939
+Brisbane|7554
+Singapore|3954
+Moscow|12699
+Johannesburg|4529
+
+City:Tokyo
+Istanbul|3559
+Johannesburg|13315
+Melbourne|12377
+Madrid|2252
+Chicago|12754
+Warsaw|5173
+San Francisco|14621
+
+City:Paris
+Johannesburg|13394
+Houston|2254
+Moscow|5478
+Lima|10920
+Tokyo|14909
+Miami|9696
+Los Angeles|4892
+Sydney|4248
+Bangkok|9755
+Beijing|9757
+Amsterdam|4621
+
+City:Dubai
+Zurich|2058
+Cairo|3000
+Moscow|7894
+New York|10054
+Johannesburg|8640
+
+City:Hong Kong
+Chicago|13386
+Tokyo|14212
+Shanghai|5537
+New York|13807
+Moscow|5719
+Rome|1583
+
+City:Singapore
+Prague|2769
+Cape Town|5521
+Vancouver|2558
+Seoul|3059
+Mexico City|6344
+Copenhagen|2120
+Stockholm|4227
+
+City:Sydney
+Moscow|6703
+Nairobi|4644
+Mumbai|12440
+Zurich|5354
+Amsterdam|6840
+
+City:Moscow
+Singapore|13687
+Johannesburg|10215
+Bangkok|11364
+Washington DC|13469
+Auckland|9344
+Chicago|8633
+Berlin|8362
+Vancouver|11527
+Shanghai|12741
+Cape Town|10328
+Amsterdam|13605
+Mumbai|9958
+
+City:Beijing
+Moscow|10527
+Madrid|7905
+Atlanta|1465
+Seattle|3436
+New York|6845
+Shanghai|1068
+Vancouver|7220
+Johannesburg|2841
+Miami|13399
+
+City:Shanghai
+Seattle|11496
+Vienna|571
+Mexico City|10500
+São Paulo|946
+Berlin|2398
+Zurich|3388
+Brisbane|5984
+Washington DC|8260
+Melbourne|3266
+Moscow|7362
+Dubai|7189
+
+City:Seoul
+Madrid|5739
+Atlanta|1809
+Seattle|11204
+Dublin|3273
+Hong Kong|3707
+Moscow|10079
+
+City:Bangkok
+Cairo|2522
+Melbourne|5863
+Seattle|12731
+Shanghai|13013
+Madrid|1261
+Tokyo|4028
+Rome|8026
+Moscow|11966
+London|5143
+Vienna|2494
+Toronto|846
+Miami|3679
+Dublin|6189
+
+City:Mumbai
+Los Angeles|11844
+São Paulo|7585
+Mexico City|3590
+Warsaw|3103
+Hong Kong|10060
+Shanghai|6490
+
+City:Istanbul
+Helsinki|1182
+Oslo|2286
+Zurich|4135
+Berlin|13240
+Dublin|12962
+Vancouver|7315
+
+City:Cairo
+Los Angeles|12073
+Zurich|4915
+Melbourne|1640
+Cape Town|7440
+Warsaw|4504
+Vancouver|1869
+Amsterdam|1856
+Madrid|1186
+Perth|4934
+Stockholm|6140
+Seoul|13410
+Copenhagen|5868
+
+City:Berlin
+Zurich|7737
+Rome|11335
+Stockholm|797
+Seoul|1633
+Warsaw|6986
+Melbourne|13999
+Johannesburg|7356
+Auckland|8802
+Singapore|5109
+Amsterdam|7997
+Shanghai|10170
+Prague|6748
+
+City:Rome
+Miami|1828
+Seattle|8654
+Buenos Aires|10325
+Stockholm|7890
+Atlanta|3770
+San Francisco|14148
+Singapore|13288
+Beijing|6217
+Washington DC|12821
+Cairo|6179
+Istanbul|9013
+
+City:Madrid
+Melbourne|10065
+Dublin|12357
+New York|13369
+Helsinki|1523
+Seoul|9609
+Seattle|14645
+London|1955
+Dubai|10537
+Paris|1050
+Cape Town|14850
+Amsterdam|3009
+Zurich|14325
+Hong Kong|10363
+Lima|10529
+
+City:Toronto
+Auckland|5925
+Chicago|12145
+São Paulo|1331
+Bangkok|10538
+Seattle|11572
+Melbourne|12019
+New York|13534
+Nairobi|5291
+
+City:Chicago
+São Paulo|7243
+Melbourne|8417
+Toronto|11901
+Bangkok|7341
+Sydney|4783
+Singapore|12378
+Mumbai|8916
+Oslo|2268
+Washington DC|12568
+Johannesburg|2029
+Atlanta|14294
+Cairo|8799
+Brisbane|4632
+
+City:Miami
+Oslo|9671
+San Francisco|7940
+Lima|7828
+Istanbul|1555
+Moscow|5521
+Atlanta|11140
+Paris|661
+
+City:Mexico City
+Vancouver|5409
+Cairo|9085
+Copenhagen|6293
+Stockholm|4525
+Warsaw|1535
+Rome|4078
+
+City:São Paulo
+Toronto|13669
+Stockholm|1787
+London|8192
+Johannesburg|10555
+Cape Town|2445
+Mexico City|2968
+Auckland|10302
+Seoul|10656
+Seattle|3043
+Amsterdam|2775
+Istanbul|9473
+Washington DC|2516
+Cairo|6835
+Hong Kong|2169
+Vienna|5879
+
+City:Buenos Aires
+Stockholm|8427
+Washington DC|11411
+Atlanta|10554
+Toronto|1502
+Sydney|13776
+Paris|14123
+
+City:Lima
+Seattle|14718
+Auckland|2179
+Paris|8796
+Dubai|12334
+Rome|6328
+Vancouver|1296
+Houston|6108
+Copenhagen|9766
+Washington DC|3062
+Helsinki|9622
+
+City:Johannesburg
+Singapore|3229
+Zurich|8479
+Madrid|13907
+Seattle|3071
+Houston|13569
+San Francisco|2653
+Cairo|4934
+Hong Kong|5278
+
+City:Cape Town
+Helsinki|8375
+London|13311
+Beijing|8673
+Miami|6883
+Tokyo|2659
+Vancouver|8504
+Vienna|7403
+Houston|1555
+Seattle|6217
+Melbourne|7428
+
+City:Nairobi
+Miami|6881
+New York|11687
+Mexico City|14060
+San Francisco|13000
+Buenos Aires|603
+Toronto|10965
+Zurich|7709
+Oslo|7300
+Brisbane|2701
+Sydney|4468
+
+City:Auckland
+Washington DC|8108
+Madrid|13530
+Paris|7182
+Miami|6793
+Berlin|1197
+Rome|12912
+
+City:Melbourne
+Mumbai|3551
+Perth|12977
+Beijing|9492
+Shanghai|891
+Istanbul|7311
+Mexico City|13777
+Toronto|3919
+Cairo|12077
+
+City:Brisbane
+Oslo|6438
+Seattle|1007
+Houston|9000
+Atlanta|6750
+Dubai|5600
+
+City:Perth
+Hong Kong|3652
+Vancouver|10322
+Brisbane|2490
+San Francisco|12239
+Amsterdam|11604
+Stockholm|12063
+
+City:Vancouver
+Johannesburg|1583
+Bangkok|3405
+Stockholm|9595
+Los Angeles|9900
+Oslo|10076
+Seoul|1847
+New York|6306
+Houston|3284
+Perth|7065
+Miami|6809
+Auckland|11154
+Shanghai|11443
+Mexico City|10949
+Washington DC|5687
+
+City:San Francisco
+Copenhagen|4729
+Rome|5045
+Toronto|2937
+São Paulo|12608
+Auckland|7066
+Mexico City|1701
+Los Angeles|751
+Houston|10504
+Amsterdam|8030
+Atlanta|14776
+Chicago|13793
+Cape Town|6712
+
+City:Seattle
+Dubai|1257
+Melbourne|10887
+Brisbane|10499
+Miami|9498
+Istanbul|8251
+Shanghai|2346
+Washington DC|3826
+Atlanta|2359
+Zurich|632
+Johannesburg|7212
+
+City:Houston
+Cape Town|11243
+Miami|12897
+Singapore|4789
+Stockholm|4205
+Los Angeles|6282
+New York|2200
+Mumbai|3570
+Beijing|2351
+Johannesburg|4661
+Vancouver|8881
+Washington DC|715
+
+City:Atlanta
+Perth|1336
+Mexico City|3197
+Paris|8945
+Rome|503
+Seattle|7607
+
+City:Washington DC
+Nairobi|12740
+Auckland|4960
+Oslo|4405
+Zurich|4630
+Seattle|6351
+Dublin|5428
+Toronto|662
+Bangkok|6362
+London|2451
+Melbourne|5887
+Stockholm|5615
+San Francisco|7629
+Hong Kong|9422
+
+City:Amsterdam
+Stockholm|2744
+San Francisco|2192
+Los Angeles|1746
+Lima|2600
+Dublin|14002
+Chicago|14676
+Sydney|14830
+Houston|12657
+
+City:Zurich
+Mexico City|2661
+Madrid|1592
+Auckland|12852
+Amsterdam|8980
+Atlanta|3240
+Chicago|3480
+Toronto|3800
+Beijing|4731
+Stockholm|637
+Cape Town|3169
+Dubai|10733
+
+City:Vienna
+Oslo|14814
+Dubai|13356
+Prague|11070
+Cairo|14362
+Johannesburg|5338
+
+City:Prague
+Seoul|3174
+San Francisco|6443
+Moscow|12619
+Seattle|13068
+Cairo|11675
+Paris|12619
+Hong Kong|9748
+Bangkok|2804
+Beijing|6881
+Nairobi|13667
+
+City:Warsaw
+Copenhagen|7657
+Paris|3376
+Shanghai|4190
+Washington DC|4412
+Vienna|6627
+Moscow|6688
+Singapore|9074
+Melbourne|3141
+Vancouver|10009
+Chicago|10204
+San Francisco|14074
+Toronto|12189
+Houston|7797
+
+City:Stockholm
+Prague|11361
+Toronto|10067
+Buenos Aires|4722
+Seattle|722
+Cape Town|7586
+Warsaw|5557
+Oslo|420
+Bangkok|3862
+Moscow|2772
+
+City:Copenhagen
+Moscow|11958
+Warsaw|6665
+Singapore|8282
+Seoul|10049
+San Francisco|12189
+Houston|11514
+São Paulo|6311
+Oslo|4496
+
+City:Helsinki
+Washington DC|2577
+Seoul|8023
+Los Angeles|10642
+Mexico City|6172
+Singapore|3162
+Johannesburg|13646
+Rome|11719
+Prague|8976
+
+City:Oslo
+Helsinki|5718
+New York|11047
+Seoul|11239
+Tokyo|10632
+Buenos Aires|7027
+Vancouver|11126
+Brisbane|3528
+Prague|4581
+Washington DC|12678
+Paris|4710
+Mexico City|12603
+Amsterdam|4406
+
+City:Dublin
+Cape Town|12371
+Moscow|1534
+Brisbane|8920
+Perth|12085
+Mumbai|10948
+Washington DC|5576
+Atlanta|4473
+London|464
+Stockholm|10448
+Amsterdam|12113
+Johannesburg|13904
+

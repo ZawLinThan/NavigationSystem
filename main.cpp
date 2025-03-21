@@ -2,15 +2,7 @@
 #include "/Users/zawlinthan/Downloads/NavigationSystem/src/Data.h"
 
 int main() {
-    std::string start, end;
-    std::cout << "From: ";
-    std::cin >> start;
-    std::cout << "To: ";
-    std::cin >> end;
-
-    Data myData("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/Data.txt");
-    myData.
-
-
+    Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/Data.txt");
+    data.createGraph("Yanasdf", "asdf");
     return 0;
 }

@@ -54,4 +54,10 @@ TEST_CASE("Testing")
             REQUIRE(costList2[i] == tempAdjacency2[i]->mCost);
         }
     }
+
+    SECTION("Dijkstra")
+    {
+        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/Data.txt");
+        data.findPath("Mandalay", "Dawei");
+    }
 }

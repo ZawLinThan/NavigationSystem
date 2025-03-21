@@ -1,6 +1,7 @@
 City:Yangon
 Mandalay|5
 Naypyitaw|1
+
 City:Naypyitaw
 Yangon|1
 Mandalay|2
