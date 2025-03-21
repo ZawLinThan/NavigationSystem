@@ -8,7 +8,9 @@ int main() {
     std::cout << "To: ";
     std::cin >> end;
 
-    Data myData("");
-    myData.createGraph(start, end);
+    Data myData("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/Data.txt");
+    myData.
+
+
     return 0;
 }
