@@ -2,13 +2,23 @@
 #include <fstream>
 #include <unordered_map>
 
+struct Edge{
+    struct Node* mTo;
+    double mCost;
+
+    Edge(Node* pNode, double pCost) {
+        mTo = pNode;
+        mCost = pCost;
+    }
+};
+
 struct Node{
     // Name of the node
     std::string mName;
 
     // Adjacency list
-    std::vector<Node*> mAdjacencyList;
-    std::vector<double> mCostList;
+    std::vector<Edge*> mAdjacencyList;
+    //std::vector<double> mCostList;
 
     // Path list
     std::vector<std::string> mPath;
@@ -27,20 +37,16 @@ struct Node{
         mName = pName;
         mVisited = false;
     }
-
-};
-
-struct Edge{
-    Node* from;
-    Node* to;
-    double cost;
 };
 
 
 class Graph{
 public:
+    // If the map does not have the node with the parameter "pName", create one
+    // If it has, retrieve the existing one
     Node* getNode(const std::string& pName);
 
+    void createEdge(Node* pFrom, Node* pTo, double pCost);
     // return the unordered-map for testing
     // test if the nodes are created well
     std::unordered_map<std::string, Node*> testFunctionGraph();

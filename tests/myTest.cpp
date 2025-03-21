@@ -20,33 +20,31 @@ TEST_CASE("Testing")
 
     SECTION("Creating graph")
     {
-        Data data("/Users/zawlinthan/Downloads/NavigationSystem/testData.txt");
+        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
         std::unordered_map<std::string, Node*> mp = data.testFunctionData().testFunctionGraph();
 
         auto temp1 = mp.at("Yangon");
         REQUIRE(temp1->mName == "Yangon");
 
         auto tempAdjacency1 = temp1->mAdjacencyList;
-        auto tempCostList1 = temp1->mCostList;
         std::vector<std::string> adjacencyList1 = {"Mandalay", "Naypyitaw"};
         std::vector<double> costList1 = {5,1};
 
         for (int i = 0; i < 2; ++i)
         {
-            REQUIRE(adjacencyList1[i] == tempAdjacency1[i]->mName);
-            REQUIRE(costList1[i] == tempCostList1[i]);
+            REQUIRE(adjacencyList1[i] == tempAdjacency1[i]->mTo->mName);
+            REQUIRE(costList1[i] == tempAdjacency1[i]->mCost);
         }
 
         auto temp2 = mp.at("Naypyitaw");
         auto tempAdjacency2 = temp2->mAdjacencyList;
-        auto tempCostList2 = temp2->mCostList;
         std::vector<std::string> adjacencyList2 = {"Yangon", "Mandalay", "Lashio"};
         std::vector<double> costList2 = {1,2,3};
 
         for (int i = 0; i < 3; ++i)
         {
-            REQUIRE(adjacencyList2[i] == tempAdjacency2[i]->mName);
-            REQUIRE(costList2[i] == tempCostList2[i]);
+            REQUIRE(adjacencyList2[i] == tempAdjacency2[i]->mTo->mName);
+            REQUIRE(costList2[i] == tempAdjacency2[i]->mCost);
         }
     }
 }

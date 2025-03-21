@@ -29,8 +29,7 @@ Data::Data(const std::string& pFile)
                 adjacentNode = mGraph.getNode(sliceStrVec[0]);
                 cost = stof(sliceStrVec[1]);
 
-                rootNode->mAdjacencyList.push_back(adjacentNode);
-                rootNode->mCostList.push_back(cost);
+                mGraph.createEdge(rootNode, adjacentNode, cost);
             }
         }
     } else {
