@@ -7,7 +7,6 @@
 
 Node::Node()
 {
-    mVisited = false;
     mPrev = nullptr;
     mCost = 0;
 }
@@ -15,7 +14,6 @@ Node::Node()
 Node::Node(const std::string& pName)
 {
     mName = pName;
-    mVisited = false;
 }
 
 std::string Node::getName() {
@@ -40,15 +38,6 @@ void Node::setName(std::string &pName) {
 
 void Node::addAdjacencyList(Edge *pEdge) {
     mAdjacencyList.push_back(pEdge);
-}
-
-
-void Node::addPath(std::string &pPath) {
-
-}
-
-void Node::setVisited(bool flag) {
-    mVisited = flag;
 }
 
 void Node::setPrev(Node *pNode) {

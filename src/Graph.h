@@ -15,7 +15,7 @@ public:
 
     // return the unordered-map for testing
     // test if the nodes are created well
-    std::unordered_map<std::string, Node*> testFunctionGraph();
+    std::unordered_map<std::string, Node*> getMap();
 private:
     std::unordered_map<std::string, Node*> mNodeMap;
 };

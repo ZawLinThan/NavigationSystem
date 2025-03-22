@@ -22,16 +22,15 @@ TEST_CASE("Testing")
     SECTION("Creating graph")
     {
         Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
-        std::unordered_map<std::string, Node*> mp = data.testFunctionData().testFunctionGraph();
+        std::unordered_map<std::string, Node*> mp = data.getGraph().getMap();
 
         // test the first node
         auto temp1 = mp.at("Yangon");
 
         auto tempAdjacency1 = temp1->getAdjacencyList();
-        std::vector<std::string> adjacencyList1 = {"Mandalay", "Naypyitaw"};
-        std::vector<double> costList1 = {5,1};
+        std::vector<std::string> adjacencyList1 = {"Mandalay", "Naypyitaw", "Bago"};
+        std::vector<double> costList1 = {5,1, 2};
 
-        auto temp = tempAdjacency1[0];
         for (int i = 0; i < 2; ++i)
         {
             // check the name of city in the adjacency list
@@ -43,8 +42,8 @@ TEST_CASE("Testing")
         // test the second node
         auto temp2 = mp.at("Naypyitaw");
         auto tempAdjacency2 = temp2->getAdjacencyList();
-        std::vector<std::string> adjacencyList2 = {"Yangon", "Mandalay", "Lashio"};
-        std::vector<double> costList2 = {1,2,3};
+        std::vector<std::string> adjacencyList2 = {"Yangon", "Mandalay", "Bago", "Taunggyi"};
+        std::vector<double> costList2 = {1,3,2,3};
 
         for (int i = 0; i < 3; ++i)
         {
@@ -57,7 +56,9 @@ TEST_CASE("Testing")
 
     SECTION("Dijkstra")
     {
-        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/Data.txt");
-        data.findPath("Mandalay", "Dawei");
+        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
+        data.findPath("Yangon", "Mandalay");
+        // to output : Yangon -> Bago -> Mawlamyine, cost: 5
+        data.findPath("Yangon", "Mandalay");
     }
 }
