@@ -17,6 +17,9 @@ public:
     // parametrized constructor
     Data(const std::string& pFile);
 
+    // helper functino for path finding
+    void findPathHelper(const std::string& pStart, const std::string& pEnd, Node* pStartNode, Node* pEndNode);
+
     // find the path and cost for destination using Dijkstra algorithm
     void findPath(const std::string& pStart, const std::string& pEnd);
 

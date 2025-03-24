@@ -11,10 +11,10 @@ Node::Node()
     mCost = 0;
 }
 
-Node::Node(const std::string& pName)
-{
-    mName = pName;
-}
+Node::Node(const std::string& pName, Coordinate* pCoordinate)
+    : mName(pName)
+    , mCoord(pCoordinate)
+{ }
 
 std::string Node::getName() {
     return mName;
@@ -32,6 +32,10 @@ double Node::getCost() {
     return mCost;
 }
 
+Coordinate* Node::getCoord() {
+    return mCoord;
+}
+
 void Node::setName(std::string &pName) {
     mName = pName;
 }
@@ -46,4 +50,8 @@ void Node::setPrev(Node *pNode) {
 
 void Node::setCost(double pCost) {
     mCost = pCost;
+}
+
+void Node::setCoord(Coordinate *pCoord) {
+    mCoord = pCoord;
 }

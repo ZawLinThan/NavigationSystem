@@ -6,19 +6,31 @@
 #include <iostream>
 #include <cstdlib>
 
-Node* Graph::getNode(const std::string& pName)
+Node* Graph::getNode(const std::string& pName, Coordinate* pCoordinate)
 {
     // if the node is in the NodeMap
-    if(mNodeMap.find(pName) != mNodeMap.end())
+    if(mNodeHashMap.find(pName) != mNodeHashMap.end())
     {
         // return the existing node
-        return mNodeMap[pName];
+        return mNodeHashMap[pName];
     } else {
         // else create a new node
-        class Node* node = new Node(pName);
+        class Node* node = new Node(pName, pCoordinate);
         // add the node to the map and return the new node
-        mNodeMap.emplace(pName,node);
+        mNodeHashMap.emplace(pName,node);
         return node;
+    }
+}
+
+Node* Graph::findNode(const std::string &pName)
+{
+    // if the node is in the NodeMap
+    if(mNodeHashMap.find(pName) != mNodeHashMap.end()) {
+        // return the existing node
+        return mNodeHashMap[pName];
+    } else {
+        // else return nullptr
+        return nullptr;
     }
 }
 
@@ -44,5 +56,5 @@ void Graph::createEdge(Node *pFrom, Node *pTo, double pCost)
 
 std::unordered_map<std::string, Node*> Graph::getMap()
 {
-    return mNodeMap;
+    return mNodeHashMap;
 }

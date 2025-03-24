@@ -7,7 +7,12 @@ class Graph{
 public:
     // If the map does not have the node with the parameter "pName", create one
     // If it has, retrieve the existing one
-    Node* getNode(const std::string& pName);
+    Node* getNode(const std::string& pName, Coordinate* pCoordinate);
+
+    // find if the map has the node with "pName"
+    // return the node if exists
+    // else return nullptr
+    Node* findNode(const std::string& pName);
 
     // add node to the adjacency list
     // also add the cost to the adjacent node
@@ -17,5 +22,5 @@ public:
     // test if the nodes are created well
     std::unordered_map<std::string, Node*> getMap();
 private:
-    std::unordered_map<std::string, Node*> mNodeMap;
+    std::unordered_map<std::string, Node*> mNodeHashMap;
 };

@@ -16,26 +16,30 @@ Data::Data(const std::string& pFile)
         double cost;            // var to store each cost to the other city
         Node* rootNode;         // var for the node of root city
         Node* adjacentNode;     // var for the node of adjacency list for root city
-
+        std::vector<std::string> sliceStrVec;
         while(!ifs.eof())
         {
             std::getline(ifs,str);
             // check if the city is the root city or the adjacent city
             if (str.find("City:") == 0)
             {
-                // if it is root city, slice it (to remove "City:" from the line)
-                rootCity = str.substr(5);
+                // if it is root city, slice it (also remove "City:" from the line)
+                sliceStrVec = stringSlice(str.substr(5), '|');
+
+                // first index is the name of the city
+                rootCity = sliceStrVec[0];
+
                 // create/ get node for the root city
-                rootNode = mGraph.getNode(rootCity);
+                rootNode = mGraph.getNode(rootCity, new Coordinate (stof(sliceStrVec[1]),stof(sliceStrVec[2])));
 
             } else {
                 // check if the string is the blank line
                 if (!str.empty())
                 {
                     // slice string to get the city name and cost to the city
-                    std::vector<std::string> sliceStrVec = stringSlice(str, '|');
-                    // create/ get node for the adjacent node
-                    adjacentNode = mGraph.getNode(sliceStrVec[0]);
+                    sliceStrVec = stringSlice(str, '|');
+                    // create/ get node for the adjacent node with the city name and the city's coordinate
+                    adjacentNode = mGraph.getNode(sliceStrVec[0], new Coordinate (stof(sliceStrVec[2]),stof(sliceStrVec[3])));
                     // get cost for the city
                     cost = stof(sliceStrVec[1]);
 
@@ -61,16 +65,12 @@ bool Data::closedSetCheck(Edge* edge)
     }
 }
 
-void Data::findPath(const std::string& pStart, const std::string& pEnd)
-{
-    // Reverse the start and end b/c dijkstra gives the reverse path
-    Node* startNode = mGraph.getNode(pEnd);
-    Node* endNode = mGraph.getNode(pStart);
-
+void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
+                          , Node* pStartNode, Node* pEndNode) {
     // put the start node to the closed set
-    closedSet.insert(startNode);
+    closedSet.insert(pStartNode);
     // set current node to startNode
-    Node* currentNode = startNode;
+    Node* currentNode = pStartNode;
 
     // bool variable to check if the path is found or not
     bool flag = true;
@@ -96,7 +96,7 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
                     // add the node to the open set
                     openSet.push(i->mTo);
                 } else {
-                // if previous node has data / the node is visited
+                    // if previous node has data / the node is visited
                     // check if the new path is  superior to the old one
                     if (currentNode->getCost() + i->mCost < i->mTo->getCost())
                     {
@@ -127,14 +127,14 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
         // remove the node from the open set
         openSet.pop();
 
-    } while (currentNode != endNode);
+    } while (currentNode != pEndNode);
 
 
     if (flag)
     {
         // output the cost of path
-        std::cout << "Path found, costs : " << endNode->getCost() << std::endl;
-        Node* temp = endNode;
+        std::cout << "Path found, costs : " << pEndNode->getCost() << std::endl;
+        Node* temp = pEndNode;
         // retrieving the path from previous node
         while (temp->getPrev() != nullptr)
         {
@@ -154,6 +154,26 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
     // reset the node ptr and cost of the data in each set
     deleteOpenSet();
     deleteClosedSet();
+}
+void Data::findPath(const std::string& pStart, const std::string& pEnd)
+{
+
+    Node* startNode = mGraph.findNode(pStart);
+    Node* endNode = mGraph.findNode(pEnd);
+
+    if (startNode && endNode)
+    {
+        // Reverse the start and end b/c dijkstra gives the reverse path
+        findPathHelper(pEnd, pStart, endNode, startNode);
+    }
+
+    if (startNode == nullptr)
+    {
+        std::cout << "First city name does not exist" << std::endl;
+    }
+    else if (endNode == nullptr){
+        std::cout << "Second city name does not exist" << std::endl;
+    }
 }
 
 void Data::deleteClosedSet()
