@@ -36,6 +36,18 @@ Coordinate* Node::getCoord() {
     return mCoord;
 }
 
+double Node::getG() {
+    return mG;
+}
+
+double Node::getH() {
+    return mH;
+}
+
+double Node::getF() {
+    return mF;
+}
+
 void Node::setName(std::string &pName) {
     mName = pName;
 }
@@ -54,4 +66,16 @@ void Node::setCost(double pCost) {
 
 void Node::setCoord(Coordinate *pCoord) {
     mCoord = pCoord;
+}
+
+void Node::setG(double pG) {
+    mG = pG;
+}
+
+void Node::setH(double pH) {
+    mH = pH;
+}
+
+void Node::setF(double pF) {
+    mF = pF;
 }

@@ -36,6 +36,10 @@ private:
 
     // coordinate of each node
     Coordinate* mCoord;
+
+    double mG;
+    double mH;
+    double mF;
 public:
     // Constructors
     Node();
@@ -48,6 +52,9 @@ public:
     Node* getPrev();
     double getCost();
     Coordinate* getCoord();
+    double getG();
+    double getH();
+    double getF();
 
     // Setters
     void setName(std::string& pName);
@@ -55,4 +62,7 @@ public:
     void setPrev(Node* pNode);
     void setCost(double pCost);
     void setCoord(Coordinate* pCoord);
+    void setG(double pG);
+    void setH(double pH);
+    void setF(double pF);
 };

@@ -45,6 +45,6 @@ public:
 private:
     Graph mGraph;
     std::unordered_set<Node*> closedSet; // hashset for O(1) lookup
-    //std::priority_queue<Node*, std::vector<Node*>, CompareNode> openSet; // priority queue for minimum cost
-    std::list<Node*> openSet;
+    std::priority_queue<Node*, std::vector<Node*>, CompareNode> openSet; // priority queue for minimum cost
+    //std::list<Node*> openSet;
 };

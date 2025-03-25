@@ -62,7 +62,7 @@ double Data::getHeuristic(Coordinate *pFrom, Coordinate *pTo)
 }
 
 void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
-    // put the start node to the closed set
+    /*// put the start node to the closed set
     closedSet.insert(pStartNode);
     // set current node to startNode
     Node* currentNode = pStartNode;
@@ -127,17 +127,21 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
         // check if no path is found
         // if the next nearest node's heuristic value starts getting away from destination,
         // no path is found
-        if (totalCostMin-minEdge->mCost > getHeuristic(currentNode->getCoord(), pEndNode->getCoord()))
-        {
-            flag = false;
 
-            if (pStartNode == pEndNode)
+        if (currentNode != pStartNode)
+        {
+            if (totalCostMin > currentNode->getCost() + getHeuristic(currentNode->getCoord(), pEndNode->getCoord()))
             {
-                std::cout << "Same city!!" << std::endl;
-            } else {
-                std::cout << "No path is found" << std::endl;
+                flag = false;
+
+                if (pStartNode == pEndNode)
+                {
+                    std::cout << "Same city!!" << std::endl;
+                } else {
+                    std::cout << "No path is found" << std::endl;
+                }
+                break;
             }
-            break;
         }
 
         // set the current node to the next nearest node
@@ -164,7 +168,55 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
 
     // Reset the current node (the last node) to nullptr and set cost to 0 for next cycle
     currentNode->setPrev(nullptr);
-    currentNode->setCost(0);
+    currentNode->setCost(0);*/
+
+    openSet.push(pStartNode);
+
+    bool flag = false;
+
+    while (!openSet.empty())
+    {
+        Node* currentNode = openSet.top();
+        openSet.pop();
+        closedSet.insert(currentNode);
+
+        if (currentNode == pEndNode)
+        {
+            flag = true;
+            std::cout << "Found -------------" << std::endl;
+            break;
+        }
+
+        std::vector<Edge*> adjacencyList = currentNode->getAdjacencyList();
+
+        for (auto i : adjacencyList)
+        {
+            if (closedSetCheck(i))
+            {
+                continue;
+            }
+
+            i->mTo->setG(currentNode->getG() + i->mCost);
+            i->mTo->setH(getHeuristic(i->mTo->getCoord(), pEndNode->getCoord()));
+            i->mTo->setF(i->mTo->getG() + i->mTo->getH());
+
+            auto temp = openSet;
+            while (!temp.empty())
+            {
+                if(i->mTo == temp.top() && i->mTo->getG() > temp.top()->getG())
+                {
+                    continue;
+                }
+                temp.pop();
+            }
+
+            openSet.push(i->mTo);
+        }
+    }
+
+    if (flag == false)
+    { std::cout << "Not found ..............." << std::endl; }
+
 
     // delete all data in open set and closed set
     // reset the node ptr and cost of the data in each set
@@ -181,7 +233,7 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
     if (startNode && endNode)
     {
         // Reverse the start and end b/c dijkstra gives the reverse path
-        findPathHelper( endNode, startNode);
+        findPathHelper( startNode, endNode);
     }
 
     if (startNode == nullptr)
@@ -216,14 +268,14 @@ void Data::deleteOpenSet()
     while (!openSet.empty())
     {
         // get the item on the top
-        auto temp = openSet.front();
+        auto temp = openSet.top();
 
         // reset the previous node and cost
         temp->setPrev(nullptr);
         temp->setCost(0);
 
         // remove the item on the top
-        openSet.remove(temp);
+        openSet.pop();
     }
 
 }
