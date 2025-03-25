@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <iostream>
 #include "Edge.h"
 
 struct Coordinate{
@@ -28,18 +29,17 @@ private:
     // Adjacency list
     std::vector<Edge*> mAdjacencyList;
 
-    // total cost, up to this node
-    double mCost;
+
+    double mCost; // total path cost, up to this node
+    double mH; // heuristic value
+    double mF; // path cost + heuristic
+    double mG;
 
     // previous node (to store path information)
     Node* mPrev;
 
     // coordinate of each node
     Coordinate* mCoord;
-
-    double mG;
-    double mH;
-    double mF;
 public:
     // Constructors
     Node();
@@ -52,17 +52,19 @@ public:
     Node* getPrev();
     double getCost();
     Coordinate* getCoord();
-    double getG();
     double getH();
     double getF();
-
+    double getG();
     // Setters
     void setName(std::string& pName);
     void addAdjacencyList(Edge* pEdge);
     void setPrev(Node* pNode);
     void setCost(double pCost);
     void setCoord(Coordinate* pCoord);
-    void setG(double pG);
     void setH(double pH);
     void setF(double pF);
+    void setG(double pG);
+
+    // overloaded operator
+    friend std::ostream& operator << (std::ostream& os, const Node* pNode);
 };

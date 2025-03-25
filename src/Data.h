@@ -6,6 +6,8 @@
 #include <functional>
 #include <list>
 
+const double PI = 3.1415;
+
 // custom comparator with a functor for priority queue
 struct CompareNode {
     bool operator()(Node* a, Node* b) const {
@@ -17,6 +19,8 @@ class Data{
 public:
     // parametrized constructor
     Data(const std::string& pFile);
+
+    double degreeToRadian(double pDegree);
 
     double getHeuristic(Coordinate* pFrom, Coordinate* pTo);
 

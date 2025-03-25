@@ -36,16 +36,16 @@ Coordinate* Node::getCoord() {
     return mCoord;
 }
 
-double Node::getG() {
-    return mG;
-}
-
 double Node::getH() {
     return mH;
 }
 
 double Node::getF() {
     return mF;
+}
+
+double Node::getG() {
+    return mG;
 }
 
 void Node::setName(std::string &pName) {
@@ -78,4 +78,9 @@ void Node::setH(double pH) {
 
 void Node::setF(double pF) {
     mF = pF;
+}
+
+std::ostream& operator<<(std::ostream& os, const Node *pNode) {
+    std::cout << pNode->mName;
+    return os;
 }

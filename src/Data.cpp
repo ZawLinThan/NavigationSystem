@@ -5,6 +5,7 @@
 #include "Data.h"
 #include <iostream>
 #include <cmath>
+#include <stack>
 
 Data::Data(const std::string& pFile)
 {
@@ -54,15 +55,33 @@ Data::Data(const std::string& pFile)
     }
 }
 
+double Data::degreeToRadian(double pDegree) {
+    return pDegree * PI / 180;
+}
+
 double Data::getHeuristic(Coordinate *pFrom, Coordinate *pTo)
 {
+
     // get heuristic value
-    double value = sqrt(pow((pFrom->mLatitude-pTo->mLatitude),2) + pow((pFrom->mLongitude-pTo->mLongitude),2));
+    double latFrom, latTo, longFrom, longTo;
+    latFrom = degreeToRadian(latFrom);
+    longFrom = degreeToRadian(longFrom);
+    latTo = degreeToRadian(latTo);
+    longTo = degreeToRadian(longTo);
+
+    double dLat = latFrom - latTo;
+    double dLong = longFrom - longTo;
+
+    // using Haversine Heuristic function,
+    double a = pow(sin(dLat/2),2) + (cos(latFrom) * cos(latTo) * pow(sin(dLong/2),2));
+    double value = 2 * 6371 * asin(sqrt(a));  //  6371 is the earth radius
+
+    //double value = sqrt(pow((pFrom->mLatitude-pTo->mLatitude),2) + pow((pFrom->mLongitude-pTo->mLongitude),2));
     return value;
 }
 
 void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
-    /*// put the start node to the closed set
+    // put the start node to the closed set
     closedSet.insert(pStartNode);
     // set current node to startNode
     Node* currentNode = pStartNode;
@@ -103,7 +122,7 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
                     // set the cost
                     i->mTo->setCost(currentNode->getCost() + i->mCost);
                     // add the node to the open set
-                    openSet.push_back(i->mTo);
+                    openSet.push(i->mTo);
                 }
             }
         }
@@ -168,9 +187,9 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
 
     // Reset the current node (the last node) to nullptr and set cost to 0 for next cycle
     currentNode->setPrev(nullptr);
-    currentNode->setCost(0);*/
+    currentNode->setCost(0);
 
-    openSet.push(pStartNode);
+    /*openSet.push(pStartNode);
 
     bool flag = false;
 
@@ -183,7 +202,27 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
         if (currentNode == pEndNode)
         {
             flag = true;
-            std::cout << "Found -------------" << std::endl;
+            std::stack<Node*> path;
+
+            std::cout << "Path found, cost : " << pEndNode->getCost() << std::endl;
+
+            while (currentNode!= nullptr)
+            {
+                path.push(currentNode);
+                currentNode = currentNode->getPrev();
+            }
+
+            while (!path.empty())
+            {
+                if (path.size() != 1)
+                {
+                    std::cout << path.top() << " -> ";
+                    path.pop();
+                } else {
+                    std::cout << path.top() << std::endl;
+                    path.pop();
+                }
+            }
             break;
         }
 
@@ -196,9 +235,10 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
                 continue;
             }
 
-            i->mTo->setG(currentNode->getG() + i->mCost);
+            i->mTo->setCost(currentNode->getCost() + i->mCost);
             i->mTo->setH(getHeuristic(i->mTo->getCoord(), pEndNode->getCoord()));
-            i->mTo->setF(i->mTo->getG() + i->mTo->getH());
+            i->mTo->setF(i->mTo->getCost() + i->mTo->getH());
+            i->mTo->setPrev(currentNode);
 
             auto temp = openSet;
             while (!temp.empty())
@@ -215,13 +255,15 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
     }
 
     if (flag == false)
-    { std::cout << "Not found ..............." << std::endl; }
+    {
+        std::cout << "Not found ..............." << std::endl;
+    }
 
 
     // delete all data in open set and closed set
     // reset the node ptr and cost of the data in each set
     deleteOpenSet();
-    deleteClosedSet();
+    deleteClosedSet();*/
 }
 
 void Data::findPath(const std::string& pStart, const std::string& pEnd)
