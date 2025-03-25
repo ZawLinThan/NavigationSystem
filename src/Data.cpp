@@ -4,7 +4,7 @@
 
 #include "Data.h"
 #include <iostream>
-#include <math.h>
+#include <cmath>
 
 Data::Data(const std::string& pFile)
 {
@@ -61,8 +61,7 @@ double Data::getHeuristic(Coordinate *pFrom, Coordinate *pTo)
     return value;
 }
 
-void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
-                          , Node* pStartNode, Node* pEndNode) {
+void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
     // put the start node to the closed set
     closedSet.insert(pStartNode);
     // set current node to startNode
@@ -74,7 +73,8 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
     // var to store the node overall shortest cost
     Edge* minEdge;
     double totalCostMin;
-    // start the main do-while loop
+    // start the main do-while loop, which will loop until the destination is found
+    // or the path does not exist
     do {
         // get the adjacency list
         std::vector<Edge*> adjacencyList = currentNode->getAdjacencyList();
@@ -106,8 +106,8 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
                     openSet.push_back(i->mTo);
                 }
             }
-
         }
+
 
         // to find the best next node
         for (auto i : adjacencyList)
@@ -124,24 +124,27 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
             }
         }
 
-        // if open set is empty, no path is found
-        if (openSet.empty())
+        // check if no path is found
+        // if the next nearest node's heuristic value starts getting away from destination,
+        // no path is found
+        if (totalCostMin-minEdge->mCost > getHeuristic(currentNode->getCoord(), pEndNode->getCoord()))
         {
-            std::cout << "No path is found" << std::endl;
-            // flag is set to "false" for not to output the data after the loop
             flag = false;
+
+            if (pStartNode == pEndNode)
+            {
+                std::cout << "Same city!!" << std::endl;
+            } else {
+                std::cout << "No path is found" << std::endl;
+            }
             break;
         }
 
-        // Reset the current node  to nullptr and set cost to 0 for next cycle
-        /*currentNode->setPrev(nullptr);
-        currentNode->setCost(0)*/;
-
+        // set the current node to the next nearest node
         currentNode = minEdge->mTo;
+        // put the current node into closed set to prevent being checked again
         closedSet.insert(currentNode);
-
     } while (currentNode != pEndNode);
-    ////////// Dijkstra Algorithm Implementation /////////
 
     if (flag)
     {
@@ -178,7 +181,7 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
     if (startNode && endNode)
     {
         // Reverse the start and end b/c dijkstra gives the reverse path
-        findPathHelper(pEnd, pStart, endNode, startNode);
+        findPathHelper( endNode, startNode);
     }
 
     if (startNode == nullptr)

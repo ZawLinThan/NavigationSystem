@@ -56,7 +56,7 @@ TEST_CASE("Testing")
     SECTION("Dijkstra")
     {
         Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
-        data.findPath("Bago", "Kalaw");
+        data.findPath("Naypyitaw", "Naypyitaw");
         // to output : Yangon -> Bago -> Mawlamyine, cost: 5
         data.findPath("Bago", "Kalaw");
     }

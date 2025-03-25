@@ -20,8 +20,8 @@ public:
 
     double getHeuristic(Coordinate* pFrom, Coordinate* pTo);
 
-    // helper functino for path finding
-    void findPathHelper(const std::string& pStart, const std::string& pEnd, Node* pStartNode, Node* pEndNode);
+    // helper function for path finding
+    void findPathHelper(Node* pStartNode, Node* pEndNode);
 
     // find the path and cost for destination using Dijkstra algorithm
     void findPath(const std::string& pStart, const std::string& pEnd);

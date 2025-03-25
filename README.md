@@ -6,3 +6,5 @@ if root city, it is
 
 if the adjacent city, it is 
 - City name | distance from root city | latitude | longitude
+
+** The map is directed map ** 
