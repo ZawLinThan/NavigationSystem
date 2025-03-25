@@ -4,6 +4,7 @@
 #include "stringSlicing.h"
 #include <unordered_set>
 #include <functional>
+#include <list>
 
 // custom comparator with a functor for priority queue
 struct CompareNode {
@@ -16,6 +17,8 @@ class Data{
 public:
     // parametrized constructor
     Data(const std::string& pFile);
+
+    double getHeuristic(Coordinate* pFrom, Coordinate* pTo);
 
     // helper functino for path finding
     void findPathHelper(const std::string& pStart, const std::string& pEnd, Node* pStartNode, Node* pEndNode);
@@ -42,5 +45,6 @@ public:
 private:
     Graph mGraph;
     std::unordered_set<Node*> closedSet; // hashset for O(1) lookup
-    std::priority_queue<Node*, std::vector<Node*>, CompareNode> openSet; // priority queue for minimum cost
+    //std::priority_queue<Node*, std::vector<Node*>, CompareNode> openSet; // priority queue for minimum cost
+    std::list<Node*> openSet;
 };

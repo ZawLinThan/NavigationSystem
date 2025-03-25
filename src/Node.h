@@ -29,7 +29,7 @@ private:
     std::vector<Edge*> mAdjacencyList;
 
     // total cost, up to this node
-    unsigned mCost;
+    double mCost;
 
     // previous node (to store path information)
     Node* mPrev;

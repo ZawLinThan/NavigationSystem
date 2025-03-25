@@ -4,6 +4,7 @@
 
 #include "Data.h"
 #include <iostream>
+#include <math.h>
 
 Data::Data(const std::string& pFile)
 {
@@ -53,16 +54,11 @@ Data::Data(const std::string& pFile)
     }
 }
 
-bool Data::closedSetCheck(Edge* edge)
+double Data::getHeuristic(Coordinate *pFrom, Coordinate *pTo)
 {
-    // if found in the closed set, return true
-    if (closedSet.find(edge->mTo) != closedSet.end())
-    {
-        return true;
-    } else {
-        // if not found in the closed set, return false
-        return false;
-    }
+    // get heuristic value
+    double value = sqrt(pow((pFrom->mLatitude-pTo->mLatitude),2) + pow((pFrom->mLongitude-pTo->mLongitude),2));
+    return value;
 }
 
 void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
@@ -75,16 +71,29 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
     // bool variable to check if the path is found or not
     bool flag = true;
 
+    // var to store the node overall shortest cost
+    Edge* minEdge;
+    double totalCostMin;
     // start the main do-while loop
     do {
         // get the adjacency list
         std::vector<Edge*> adjacencyList = currentNode->getAdjacencyList();
 
-        // Iterate through adjacency list of the node
+        if (!adjacencyList.empty())
+        {
+            minEdge = adjacencyList[0];
+            // total cost = direct distance + heuristic value
+            totalCostMin = minEdge->mCost + getHeuristic(minEdge->mTo->getCoord(),pEndNode->getCoord());
+        } else {
+            std::cout << "ERROR -> path not found";
+            break;
+        }
+
+
+        // Iterate through adjacency list of the node to assign prev Node and the cost
         for (auto& i : adjacencyList)
         {
-            // if not in closed set
-            if (!closedSetCheck(i))
+            if (closedSetCheck(i) == false)
             {
                 // if previous node is empty / the node is not visited yet
                 if (i->mTo->getPrev() == nullptr)
@@ -94,17 +103,23 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
                     // set the cost
                     i->mTo->setCost(currentNode->getCost() + i->mCost);
                     // add the node to the open set
-                    openSet.push(i->mTo);
-                } else {
-                    // if previous node has data / the node is visited
-                    // check if the new path is  superior to the old one
-                    if (currentNode->getCost() + i->mCost < i->mTo->getCost())
-                    {
-                        // if new path is better, set the previous node of the city to the current node
-                        i->mTo->setPrev(currentNode);
-                        // recalculate the cost
-                        i->mTo->setCost(currentNode->getCost() + i->mCost);
-                    }
+                    openSet.push_back(i->mTo);
+                }
+            }
+
+        }
+
+        // to find the best next node
+        for (auto i : adjacencyList)
+        {
+            if (closedSetCheck(i) == false) {
+                double totalCostCurr = i->mCost + getHeuristic(i->mTo->getCoord(), pEndNode->getCoord());
+
+                // if previous node has data / the node is visited
+                // check if the new path is  superior to the old one
+                if (totalCostCurr < totalCostMin) {
+                    totalCostMin = totalCostCurr;
+                    minEdge = i;
                 }
             }
         }
@@ -119,16 +134,14 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
         }
 
         // Reset the current node  to nullptr and set cost to 0 for next cycle
-        currentNode->setPrev(nullptr);
-        currentNode->setCost(0);
+        /*currentNode->setPrev(nullptr);
+        currentNode->setCost(0)*/;
 
-        // update the current node to the smallest-distance adjacent city
-        currentNode = openSet.top();
-        // remove the node from the open set
-        openSet.pop();
+        currentNode = minEdge->mTo;
+        closedSet.insert(currentNode);
 
     } while (currentNode != pEndNode);
-
+    ////////// Dijkstra Algorithm Implementation /////////
 
     if (flag)
     {
@@ -155,6 +168,7 @@ void Data::findPathHelper(const std::string &pStart, const std::string &pEnd
     deleteOpenSet();
     deleteClosedSet();
 }
+
 void Data::findPath(const std::string& pStart, const std::string& pEnd)
 {
 
@@ -176,6 +190,18 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
     }
 }
 
+bool Data::closedSetCheck(Edge* edge)
+{
+    // if found in the closed set, return true
+    if (closedSet.find(edge->mTo) != closedSet.end())
+    {
+        return true;
+    } else {
+        // if not found in the closed set, return false
+        return false;
+    }
+}
+
 void Data::deleteClosedSet()
 {
     closedSet.clear();
@@ -187,14 +213,14 @@ void Data::deleteOpenSet()
     while (!openSet.empty())
     {
         // get the item on the top
-        auto temp = openSet.top();
+        auto temp = openSet.front();
 
         // reset the previous node and cost
         temp->setPrev(nullptr);
         temp->setCost(0);
 
         // remove the item on the top
-        openSet.pop();
+        openSet.remove(temp);
     }
 
 }
