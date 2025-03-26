@@ -11,7 +11,7 @@ const double PI = 3.1415;
 // custom comparator with a functor for priority queue
 struct CompareNode {
     bool operator()(Node* a, Node* b) const {
-        return a->getCost() > b->getCost(); // Min-heap (smallest value on top)
+        return a->getCost() + a->getH()> b->getCost() + b->getH(); // Min-heap (smallest value on top) // sort based on total value (cost + H)
     }
 };
 
@@ -20,9 +20,7 @@ public:
     // parametrized constructor
     Data(const std::string& pFile);
 
-    double degreeToRadian(double pDegree);
-
-    double getHeuristic(Coordinate* pFrom, Coordinate* pTo);
+    void assignHeuristic(Node* pEndNode);
 
     // helper function for path finding
     void findPathHelper(Node* pStartNode, Node* pEndNode);
@@ -30,9 +28,12 @@ public:
     // find the path and cost for destination using Dijkstra algorithm
     void findPath(const std::string& pStart, const std::string& pEnd);
 
-    // check if the node is in the closed set or not (used for Dijkstra algorithm)
+    // check if the node is in the closed set or not (for efficiency, not to repeat the visited, guaranteed node)
     bool closedSetCheck(Edge* node);
 
+    // check if the node is in the open set or not (not to put the node replicas in open set)
+    bool openSetCheck(Edge* node)
+    ;
     // delete all items in the closed set
     void deleteClosedSet();
 
@@ -40,6 +41,9 @@ public:
     // reset the cost of each item to 0
     // reset the previous node of each item to nullptr
     void deleteOpenSet();
+
+    // if the path is found, retrieve the path and print it out
+    void printPath(Node* pEndNode);
 
     // return the graph for testing
     Graph getGraph();
@@ -52,3 +56,9 @@ private:
     std::priority_queue<Node*, std::vector<Node*>, CompareNode> openSet; // priority queue for minimum cost
     //std::list<Node*> openSet;
 };
+
+// convert degree to radian
+double degreeToRadian(double pDegree);
+
+// create heuristic value
+double getHeuristic(Coordinate* pFrom, Coordinate* pTo);

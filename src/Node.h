@@ -33,7 +33,6 @@ private:
     double mCost; // total path cost, up to this node
     double mH; // heuristic value
     double mF; // path cost + heuristic
-    double mG;
 
     // previous node (to store path information)
     Node* mPrev;
@@ -54,7 +53,7 @@ public:
     Coordinate* getCoord();
     double getH();
     double getF();
-    double getG();
+
     // Setters
     void setName(std::string& pName);
     void addAdjacencyList(Edge* pEdge);
@@ -62,8 +61,7 @@ public:
     void setCost(double pCost);
     void setCoord(Coordinate* pCoord);
     void setH(double pH);
-    void setF(double pF);
-    void setG(double pG);
+    void setF();
 
     // overloaded operator
     friend std::ostream& operator << (std::ostream& os, const Node* pNode);

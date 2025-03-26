@@ -9,6 +9,7 @@ Node::Node()
 {
     mPrev = nullptr;
     mCost = 0;
+    mH = 0;
 }
 
 Node::Node(const std::string& pName, Coordinate* pCoordinate)
@@ -44,9 +45,6 @@ double Node::getF() {
     return mF;
 }
 
-double Node::getG() {
-    return mG;
-}
 
 void Node::setName(std::string &pName) {
     mName = pName;
@@ -68,16 +66,12 @@ void Node::setCoord(Coordinate *pCoord) {
     mCoord = pCoord;
 }
 
-void Node::setG(double pG) {
-    mG = pG;
-}
-
 void Node::setH(double pH) {
     mH = pH;
 }
 
-void Node::setF(double pF) {
-    mF = pF;
+void Node::setF() {
+    mF = mH + mCost;
 }
 
 std::ostream& operator<<(std::ostream& os, const Node *pNode) {

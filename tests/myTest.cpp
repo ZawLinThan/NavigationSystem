@@ -1,11 +1,12 @@
 #define CONFIG_CATCH_MAIN
 
 #include <iostream>
+#include <cmath>
 #include "catch.hpp"
 #include "stringSlicing.h"
 #include "Data.h"
 
-TEST_CASE("Testing")
+TEST_CASE("Slice String")
 {
     SECTION("Slice String")
     {
@@ -17,10 +18,13 @@ TEST_CASE("Testing")
         REQUIRE(vec[0] == "Mandalay");
         REQUIRE(vec[1] == "5");
     }
+}
 
+TEST_CASE("Data class")
+{
     SECTION("Creating graph")
     {
-        /*Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
+        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
         std::unordered_map<std::string, Node*> mp = data.getGraph().getMap();
 
         // test the first node
@@ -41,23 +45,48 @@ TEST_CASE("Testing")
         // test the second node
         auto temp2 = mp.at("Naypyitaw");
         auto tempAdjacency2 = temp2->getAdjacencyList();
-        std::vector<std::string> adjacencyList2 = {"Yangon", "Mandalay", "Bago", "Taunggyi"};
-        std::vector<double> costList2 = {1,3,2,3};
+        std::vector<std::string> adjacencyList2 = {"Yangon", "Mandalay", "Bago", "Pyinmana"};
+        std::vector<double> costList2 = {1,4,1.41,2};
 
-        for (int i = 0; i < 3; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             // check the name of city in the adjacency list
             REQUIRE(adjacencyList2[i] == tempAdjacency2[i]->mTo->getName());
             // check the cost to cities in the adjacency list
-            REQUIRE(costList2[i] == tempAdjacency2[i]->mCost);
-        }*/
+            REQUIRE((int)costList2[i] == (int)tempAdjacency2[i]->mCost);
+        }
     }
 
-    SECTION("Dijkstra")
+    SECTION("Test Degree to Radian")
+    {
+        REQUIRE(degreeToRadian(180) == PI);
+    }
+
+    SECTION("Get Heuristic")
+    {
+        auto* firstCoord = new Coordinate(0,0);
+
+        auto* secCoord = new Coordinate(3,4);
+
+        auto* thirdCoord = new Coordinate(1,2);
+        // distance between first and second nodes has to be larger than that of first and third nodes.
+        REQUIRE(getHeuristic(firstCoord, secCoord) > getHeuristic(firstCoord,thirdCoord));
+    }
+
+    SECTION("A*")
     {
         Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
-        //data.findPath("Naypyitaw", "Naypyitaw");
+        // Yangon -> Mandalay, cost: 5
+        // Yangon -> Naypyitaw -> Mandalay, cost : 5
+        data.findPath("Yangon", "Mandalay");
+
+        // Yangon -> Mandalay -> Taunggyi, cost : 9
+        data.findPath("Yangon", "Taunggyi");
+
+        data.findPath("Naypyitaw", "Naypyitaw");
+
         // to output : Yangon -> Bago -> Mawlamyine, cost: 5
         data.findPath("Bago", "Kalaw");
     }
+
 }
