@@ -68,41 +68,60 @@ void Data::assignHeuristic(Node *pEndNode) {
     }
 }
 
-void Data::findPath(const std::string& pStart, const std::string& pEnd)
+bool Data::closedSetCheck(Edge* edge)
 {
-
-    Node* startNode = mGraph.findNode(pStart);
-    Node* endNode = mGraph.findNode(pEnd);
-
-
-
-    if (startNode && endNode)
+    // if found in the closed set, return true
+    if (closedSet.find(edge->mTo) != closedSet.end())
     {
-        // create and assign heuristic value to each node
-        assignHeuristic(endNode);
-        // Reverse the start and end b/c dijkstra gives the reverse path
-        findPathHelper( startNode, endNode);
+        return true;
+    } else {
+        // if not found in the closed set, return false
+        return false;
     }
-    else if (startNode == nullptr)
-    {
-        std::cout << "First city name does not exist" << std::endl;
-    }
-    else if (endNode == nullptr){
-        std::cout << "Second city name does not exist" << std::endl;
-    }
-
-    // Reset prev and cost for next cycle
-    for (auto i : mGraph.getMap())
-    {
-        i.second->setPrev(nullptr);
-        i.second->setCost(0);
-        i.second->setH(0);
-        i.second->setF();
-    }
-    // Remove all items in both sets for next cycle
-    deleteClosedSet();
-    deleteOpenSet();
 }
+
+
+bool Data::openSetCheck(Edge *edge) {
+    auto temp = openSet;
+    while (!temp.empty())
+    {
+        if (temp.top() == edge->mTo)
+        {
+            return true;
+        }
+        temp.pop();
+    }
+    return false;
+}
+
+
+void Data::printPath(Node* pEndNode)
+{
+    std::cout << "Path found, cost : " << pEndNode->getCost() << std::endl;
+
+    auto temp = pEndNode;    // initialized to retrieve the path backward
+    std::stack<Node*> path;         // to store the path is backward direction
+    while (temp!= nullptr)
+    {
+        // add the path to the stack
+        path.push(temp);
+        temp = temp->getPrev();
+    }
+
+    // print the city out
+    while (!path.empty())
+    {
+        temp = path.top();
+        if (path.size() != 1)
+        {
+            std::cout << temp << " -> ";
+        } else {
+            std::cout << temp << std::endl << std::endl;
+        }
+        path.pop();
+    }
+}
+
 
 void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
     Node* currentNode = pStartNode;
@@ -181,33 +200,47 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
 
 }
 
-bool Data::closedSetCheck(Edge* edge)
+void Data::findPath(const std::string& pStart, const std::string& pEnd)
 {
-    // if found in the closed set, return true
-    if (closedSet.find(edge->mTo) != closedSet.end())
+
+    Node* startNode = mGraph.findNode(pStart);
+    Node* endNode = mGraph.findNode(pEnd);
+
+
+
+    if (startNode && endNode)
     {
-        return true;
-    } else {
-        // if not found in the closed set, return false
-        return false;
+        // create and assign heuristic value to each node
+        assignHeuristic(endNode);
+        // Reverse the start and end b/c dijkstra gives the reverse path
+        findPathHelper( startNode, endNode);
     }
+
+    if (startNode == nullptr)
+    {
+        std::cout << "First city name does not exist" << std::endl;
+    }
+    if (endNode == nullptr){
+        std::cout << "Second city name does not exist" << std::endl;
+    }
+
+    // Reset prev and cost for next cycle
+    for (auto i : mGraph.getMap())
+    {
+        i.second->setPrev(nullptr);
+        i.second->setCost(0);
+        i.second->setH(0);
+        i.second->setF();
+    }
+    // Remove all items in both sets for next cycle
+    deleteClosedSet();
+    deleteOpenSet();
 }
 
-bool Data::openSetCheck(Edge *edge) {
-    auto temp = openSet;
-    while (!temp.empty())
-    {
-        if (temp.top() == edge->mTo)
-        {
-            return true;
-        }
-        temp.pop();
-    }
-    return false;
 
-}
 void Data::deleteClosedSet()
 {
+    // clear closed set
     closedSet.clear();
 }
 
@@ -229,36 +262,11 @@ void Data::deleteOpenSet()
 
 }
 
-void Data::printPath(Node* pEndNode)
-{
-    std::cout << "Path found, cost : " << pEndNode->getCost() << std::endl;
-
-    auto temp = pEndNode;    // initialized to retrieve the path backward
-    std::stack<Node*> path;         // to store the path is backward direction
-    while (temp!= nullptr)
-    {
-        // add the path to the stack
-        path.push(temp);
-        temp = temp->getPrev();
-    }
-
-    // print the city out
-    while (!path.empty())
-    {
-        temp = path.top();
-        if (path.size() != 1)
-        {
-            std::cout << temp << " -> ";
-        } else {
-            std::cout << temp << std::endl << std::endl;
-        }
-        path.pop();
-    }
-}
 
 Graph Data::getGraph() {
     return mGraph;
 }
+
 
 Data::~Data()
 {
@@ -275,14 +283,14 @@ double degreeToRadian(double pDegree) {
 
 double getHeuristic(Coordinate *pFrom, Coordinate *pTo)
 {
-/*
 
     // get heuristic value
+    // Haversine formula
     double latFrom, latTo, longFrom, longTo;
-    latFrom = degreeToRadian(latFrom);
-    longFrom = degreeToRadian(longFrom);
-    latTo = degreeToRadian(latTo);
-    longTo = degreeToRadian(longTo);
+    latFrom = degreeToRadian(pFrom->mLatitude);
+    longFrom = degreeToRadian(pFrom->mLongitude);
+    latTo = degreeToRadian(pTo->mLatitude);
+    longTo = degreeToRadian(pTo->mLongitude);
 
     double dLat = latFrom - latTo;
     double dLong = longFrom - longTo;
@@ -290,8 +298,8 @@ double getHeuristic(Coordinate *pFrom, Coordinate *pTo)
     // using Haversine Heuristic function,
     double a = pow(sin(dLat/2),2) + (cos(latFrom) * cos(latTo) * pow(sin(dLong/2),2));
     double value = 2 * 6371 * asin(sqrt(a));  //  6371 is the earth radius
-*/
 
-    double value = sqrt(pow((pFrom->mLatitude-pTo->mLatitude),2) + pow((pFrom->mLongitude-pTo->mLongitude),2));
+
+    //double value = sqrt(pow((pFrom->mLatitude-pTo->mLatitude),2) + pow((pFrom->mLongitude-pTo->mLongitude),2));
     return value;
 }

@@ -20,20 +20,24 @@ public:
     // parametrized constructor
     Data(const std::string& pFile);
 
+    // assign heuristic value to each node
     void assignHeuristic(Node* pEndNode);
-
-    // helper function for path finding
-    void findPathHelper(Node* pStartNode, Node* pEndNode);
-
-    // find the path and cost for destination using Dijkstra algorithm
-    void findPath(const std::string& pStart, const std::string& pEnd);
 
     // check if the node is in the closed set or not (for efficiency, not to repeat the visited, guaranteed node)
     bool closedSetCheck(Edge* node);
 
     // check if the node is in the open set or not (not to put the node replicas in open set)
-    bool openSetCheck(Edge* node)
-    ;
+    bool openSetCheck(Edge* node);
+
+    // if the path is found, retrieve the path and print it out
+    void printPath(Node* pEndNode);
+
+    // find the path and cost for destination using Dijkstra algorithm
+    void findPath(const std::string& pStart, const std::string& pEnd);
+
+    // helper function for path finding
+    void findPathHelper(Node* pStartNode, Node* pEndNode);
+
     // delete all items in the closed set
     void deleteClosedSet();
 
@@ -41,9 +45,6 @@ public:
     // reset the cost of each item to 0
     // reset the previous node of each item to nullptr
     void deleteOpenSet();
-
-    // if the path is found, retrieve the path and print it out
-    void printPath(Node* pEndNode);
 
     // return the graph for testing
     Graph getGraph();
@@ -60,5 +61,6 @@ private:
 // convert degree to radian
 double degreeToRadian(double pDegree);
 
-// create heuristic value
+// create heuristic value between 2 nodes
+// helper function of assignHeuristic() function
 double getHeuristic(Coordinate* pFrom, Coordinate* pTo);
