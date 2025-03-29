@@ -13,6 +13,8 @@ Concepts: class, dynamic memory allocation, data structure, A* algorithm,
 for data set, 
 
 The data is parsed from "Data.txt". 
+
+
 Format:
 
 if root city,
