@@ -85,12 +85,16 @@ bool Data::openSetCheck(Edge *edge) {
     auto temp = openSet;
     while (!temp.empty())
     {
+        // if the city in the open set is equal to the node
+        // return true
         if (temp.top() == edge->mTo)
         {
             return true;
         }
         temp.pop();
     }
+    // if 'true' is not returned, not found
+    // return false
     return false;
 }
 
@@ -126,15 +130,17 @@ void Data::printPath(Node* pEndNode)
 void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
     Node* currentNode = pStartNode;
 
+    // flag var to check if the path is found or not
     bool flag = true;
-    // std::priority_queue<Node*, std::vector<Node*>, CompareNode> leafSet;
 
+    // while current node is not equal to the destination node
     while (currentNode != pEndNode)
     {
+        // put the current node to the closed set
         closedSet.insert(currentNode);
 
+        // set size to the size of open set for
         unsigned size = openSet.size();
-        //auto adjacencyList = currentNode->getAdjacencyList();
 
         // traverse through the adjacency list of current node
         for (auto i : currentNode->getAdjacencyList())
@@ -148,8 +154,8 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
                     i->mTo->setPrev(currentNode);
                     // set its total cost
                     i->mTo->setCost(i->mCost + currentNode->getCost());
+                    // update the F of the node
                     i->mTo->setF();
-                    //openSet.push(i->mTo);
                 } else {
                     // check if the new path is superior
                     if (currentNode->getCost() + i->mTo->getH() + i->mCost < i ->mTo->getF())
@@ -158,14 +164,15 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
                         i -> mTo->setPrev(currentNode);
                         // recalculate the cost (path cost + node's cost)
                         i->mTo->setCost(currentNode->getCost() + i->mCost);
-                        // update the total cost (F)
+                        // update the F of the node
                         i->mTo->setF();
                     }
                 }
                 // if the node is not in open set, push back
-                // if statement to prevent duplicas
+                // if statement to prevent duplicates
                 if (openSetCheck(i) == false)
                 {
+                    // add the node to the open set
                     openSet.push(i->mTo);
                 }
             }
@@ -173,22 +180,23 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
 
         // if open set is empty, no path is found
         if (openSet.empty()) {
+            // set flag to false
             flag = false;
             std::cout << "No path found" << std::endl << std::endl;
             break;
         }
 
-        // if open set has no new nodes added / the node is the leaf node
-        if (openSet.size() == size)
+        // if new node is added in this cycle, set its prev to current node
+        if (openSet.size() != size)
         {
-            // current node to be the next nearest node to the destination node
-            currentNode = openSet.top();
-        } else {
-
+            // set the previous of the next nearest node be the current node
             openSet.top()->setPrev(currentNode);
-            currentNode = openSet.top();
         }
 
+        // set the current node the next nearest node / top node from the open set
+        currentNode = openSet.top();
+
+        // remove the top item from the open set / remove the next nearest node
         openSet.pop();
     }
 
@@ -202,12 +210,12 @@ void Data::findPathHelper(Node* pStartNode, Node* pEndNode) {
 
 void Data::findPath(const std::string& pStart, const std::string& pEnd)
 {
-
+    // get the start node
     Node* startNode = mGraph.findNode(pStart);
+    // get the end node
     Node* endNode = mGraph.findNode(pEnd);
 
-
-
+    // if the start node and end node exist
     if (startNode && endNode)
     {
         // create and assign heuristic value to each node
@@ -216,10 +224,12 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
         findPathHelper( startNode, endNode);
     }
 
+    // if the start node does not exist
     if (startNode == nullptr)
     {
         std::cout << "First city name does not exist" << std::endl;
     }
+    // if the end node does not exist
     if (endNode == nullptr){
         std::cout << "Second city name does not exist" << std::endl;
     }
@@ -227,11 +237,16 @@ void Data::findPath(const std::string& pStart, const std::string& pEnd)
     // Reset prev and cost for next cycle
     for (auto i : mGraph.getMap())
     {
+        // reset prev
         i.second->setPrev(nullptr);
+        // reset cost
         i.second->setCost(0);
+        // reset heuristic
         i.second->setH(0);
+        // update F again
         i.second->setF();
     }
+
     // Remove all items in both sets for next cycle
     deleteClosedSet();
     deleteOpenSet();
@@ -259,7 +274,6 @@ void Data::deleteOpenSet()
         // remove the item on the top
         openSet.pop();
     }
-
 }
 
 
@@ -273,6 +287,9 @@ Data::~Data()
     // free the memory for all pointers in the graph
     for (auto& i : mGraph.getMap())
     {
+        // delete the coordinate struct of the node
+        delete i.second->getCoord();
+        // delete the node itself
         delete i.second;
     }
 }
@@ -299,7 +316,5 @@ double getHeuristic(Coordinate *pFrom, Coordinate *pTo)
     double a = pow(sin(dLat/2),2) + (cos(latFrom) * cos(latTo) * pow(sin(dLong/2),2));
     double value = 2 * 6371 * asin(sqrt(a));  //  6371 is the earth radius
 
-
-    //double value = sqrt(pow((pFrom->mLatitude-pTo->mLatitude),2) + pow((pFrom->mLongitude-pTo->mLongitude),2));
     return value;
 }
