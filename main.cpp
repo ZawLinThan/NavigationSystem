@@ -1,8 +1,8 @@
 #include <iostream>
-#include "/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/src/Data.h"
+#include "../src/Data.h"
 
 int main(){
-    Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/Data.txt");
+    Data data("../data/Data.txt");
     std::cout << "Enter 'STOP' to exit" << std::endl;
     while (true)
     {

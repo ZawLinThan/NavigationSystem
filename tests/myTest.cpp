@@ -1,7 +1,6 @@
 #define CONFIG_CATCH_MAIN
 
 #include <iostream>
-#include <cmath>
 #include "catch.hpp"
 #include "stringSlicing.h"
 #include "Data.h"
@@ -24,7 +23,7 @@ TEST_CASE("Data class")
 {
     SECTION("Creating graph")
     {
-        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
+        Data data("../data/testData.txt");
         std::unordered_map<std::string, Node*> mp = data.getGraph().getMap();
 
         // test the first node
@@ -75,7 +74,7 @@ TEST_CASE("Data class")
 
     SECTION("A*")
     {
-        Data data("/Users/zawlinthan/Desktop/NavigationSystem/NavigationSystem/testData.txt");
+        Data data("../data/testData.txt");
         // Yangon -> Mandalay, cost: 5
         // Yangon -> Naypyitaw -> Mandalay, cost : 5
         data.findPath("Yangon", "Mandalay");
@@ -88,5 +87,4 @@ TEST_CASE("Data class")
         // to output : Yangon -> Bago -> Mawlamyine, cost: 5
         data.findPath("Bago", "Kalaw");
     }
-
 }
